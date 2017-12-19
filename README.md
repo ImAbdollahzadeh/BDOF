@@ -1,6 +1,6 @@
 # BDDOS
 
-This is a Bitmap decoder which gets the actual address of a .bmp file and then displays it directly on Video card frame buffer.
+This is a Bitmap decoder which gets the actual address of a .bmp file and then displays it directly on the video card's frame buffer.
 To get access to frame buffer, one has to call the frame buffer device file with the use of ioctl call.
 
 The monitoring itself, all takes place in X mode. 
