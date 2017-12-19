@@ -12,7 +12,7 @@
 #include <stdio.h>		// standard C library
 #include <stdint.h>		// to close a device file
 #include <fcntl.h>		// to open a device file
-#include <sys/mman.h>		//get access to mmap
+#include <sys/mman.h>		// get access to mmap
 #include <sys/ioctl.h>		// access to ioctl calls
 #include <iostream>		// standard C++ library
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
