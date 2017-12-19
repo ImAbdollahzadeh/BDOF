@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*
- *	Bitmap Drawer Directly on Screen (BDDOS)
+ *  Bitmap Drawer Directly on Screen (BDDOS)
  *  Programmer: Iman Abdollahzadeh
  *  19/12/2017; under MIT licence
  *  To get the object file, simply open a terminal, by going to the folder, run this command:
@@ -9,12 +9,12 @@
  */
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <linux/fb.h>		// to get access to variable and fix screen structs
-#include <stdio.h>			// standard C library
-#include <stdint.h>			// to close a device file
-#include <fcntl.h>			// to open a device file
+#include <stdio.h>		// standard C library
+#include <stdint.h>		// to close a device file
+#include <fcntl.h>		// to open a device file
 #include <sys/mman.h>		//get access to mmap
 #include <sys/ioctl.h>		// access to ioctl calls
-#include <iostream>			// standard C++ library
+#include <iostream>		// standard C++ library
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 typedef struct fb_var_screeninfo VariableScreen;
 typedef struct fb_fix_screeninfo FixScreen;
@@ -93,7 +93,7 @@ int main( void ) {
 			*((unsigned int*)(fbp + location)) = pixel_color(0x00, 0x00, 0x00, &vinfo);
 		}
 	}
-	display("tiger.bmp", 
+	display("SampleImage.bmp", 
 		/* by default; don't change */ &finfo, &vinfo, fbp);
 	return 0;
 }
