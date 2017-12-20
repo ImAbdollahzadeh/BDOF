@@ -9,8 +9,6 @@
  */
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <linux/fb.h>		// to get access to variable and fix screen structs
-#include <stdio.h>		// standard C library
-#include <stdint.h>		// to close a device file
 #include <fcntl.h>		// to open a device file
 #include <sys/mman.h>		// get access to mmap
 #include <sys/ioctl.h>		// access to ioctl calls
@@ -29,9 +27,7 @@ inline unsigned int pixel_color(
 	unsigned char   r, 
 	unsigned char   g, 
 	unsigned char   b, 
-	VariableScreen* vinfo
-)
-{
+	VariableScreen* vinfo){
 	return (r << vinfo->red.offset) | (g << vinfo->green.offset) | (b << vinfo->blue.offset);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -39,9 +35,7 @@ inline void display(
 	const char*     address, 
 	FixScreen*      pfinfo, 
 	VariableScreen* pvinfo, 
-	unsigned char*  screen_start
-)
-{
+	unsigned char*  screen_start){
 	BMP* bmp               = nullptr;
 	FILE* f                = fopen(address, "rb");
 	bmp                    = (BMP*)malloc(sizeof(BMP));
@@ -71,7 +65,7 @@ inline void display(
 	return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-int main( void ) {
+int main( void ){
 	FixScreen      finfo;
 	VariableScreen vinfo;
 	int fb = open("/dev/fb0", O_RDWR);
