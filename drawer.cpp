@@ -73,11 +73,11 @@ static void fast_convert_24_bit_to_32_bit(const void*  _24bits,
 	} while (byte -= 32);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-inline void display(
-	const char*     address, 
-	FixScreen*      pfinfo, 
-	VariableScreen* pvinfo, 
-	unsigned char*  screen_start){
+inline void display(const char*     address, 
+		    FixScreen*      pfinfo, 
+		    VariableScreen* pvinfo, 
+		    unsigned char*  screen_start)
+{
 	BMP* bmp               = nullptr;
 	FILE* f                = fopen(address, "rb");
 	bmp                    = (BMP*)malloc(sizeof(BMP));
