@@ -51,16 +51,16 @@ typedef struct __BMP {
 } BMP;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 inline unsigned int pixel_color(unsigned char   r, 
-				unsigned char   g, 
-				unsigned char   b, 
-				VariableScreen* vinfo)
+				 unsigned char   g, 
+				 unsigned char   b, 
+				 VariableScreen* vinfo)
 {
 	return (r << vinfo->red.offset) | (g << vinfo->green.offset) | (b << vinfo->blue.offset);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 static void fast_convert_24_bit_to_32_bit(const void*  _24bits,
-	                                  void*        _32bits,
-	                                  const size_t _32bits_bytes)
+	                                   void*        _32bits,
+	                                   const size_t _32bits_bytes)
 {
 	unsigned long long* src = (unsigned long long*)_24bits;
 	unsigned long long* trg = (unsigned long long*)_32bits;
