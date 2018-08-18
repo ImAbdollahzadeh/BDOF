@@ -4,8 +4,8 @@
  *  Programmer: Iman Abdollahzadeh
  *  19/12/2017; under MIT licence
  *  To get the object file, simply open a terminal, by going to the folder, run this command:
- *  g++ -std=c++0x TEST.cpp -o tst.o
- *  Then open the X terminal, navigate to the same folder as above, and simply run: sudo ./tst.o
+ *  g++ -std=c++0x drawer.cpp -o drawer.o
+ *  Then open the X terminal, navigate to the same folder as above, and simply run: sudo ./drawer.o
  */
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <linux/fb.h>		// to get access to variable and fix screen structs
