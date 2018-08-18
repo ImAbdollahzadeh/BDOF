@@ -14,6 +14,33 @@
 #include <sys/ioctl.h>		// access to ioctl calls
 #include <iostream>		// standard C++ library
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+#define MASK_0_24_TO_32 0x0000000000FFFFFF
+#define MASK_1_24_TO_32 0x0000FFFFFF000000
+#define MASK_2_24_TO_32 0xFFFF000000000000
+#define MASK_3_24_TO_32 0x00000000000000FF
+#define MASK_4_24_TO_32 0x00000000FFFFFF00
+#define MASK_5_24_TO_32 0x00FFFFFF00000000
+#define MASK_6_24_TO_32 0xFF00000000000000
+#define MASK_7_24_TO_32 0x000000000000FFFF
+#define MASK_8_24_TO_32 0x000000FFFFFF0000
+#define MASK_9_24_TO_32 0xFFFFFF0000000000
+
+#define MASK_24_BITS_BLACK 0x0000000000000000
+#define MASK_24_BITS_WHITE 0x00FFFFFF00FFFFFF
+#define MASK_24_BITS_RED   0x00FF000000FF0000
+#define MASK_24_BITS_BLUE  0x000000FF000000FF
+#define MASK_24_BITS_GREEN 0x0000FF0000000000
+
+#define ALIGN_64(X)     ((X) + 63) & ~63
+#define ALIGN_32(X)     ((X) + 31) & ~31
+#define ALIGN_16(X)     ((X) + 15) & ~15
+#define ALIGN_8(X)      ((X) + 7 ) & ~7
+
+#define IS_ALIGN_64(X)     (!(ALIGN_64(X)%64))
+#define IS_ALIGN_32(X)     (!(ALIGN_32(X)%32))
+#define IS_ALIGN_16(X)     (!(ALIGN_16(X)%16))
+#define IS_ALIGN_8(X)      (!(ALIGN_8(X) %8 ))
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 typedef struct fb_var_screeninfo VariableScreen;
 typedef struct fb_fix_screeninfo FixScreen;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -23,12 +50,27 @@ typedef struct __BMP {
 	unsigned char* pixels;
 } BMP;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-inline unsigned int pixel_color(
-	unsigned char   r, 
-	unsigned char   g, 
-	unsigned char   b, 
-	VariableScreen* vinfo){
+inline unsigned int pixel_color(unsigned char   r, 
+				unsigned char   g, 
+				unsigned char   b, 
+				VariableScreen* vinfo)
+{
 	return (r << vinfo->red.offset) | (g << vinfo->green.offset) | (b << vinfo->blue.offset);
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+static void fast_convert_24_bit_to_32_bit(const void*  _24bits,
+	                                  void*        _32bits,
+	                                  const size_t _32bits_bytes)
+{
+	unsigned long long* src = (unsigned long long*)_24bits;
+	unsigned long long* trg = (unsigned long long*)_32bits;
+	size_t byte = _32bits_bytes;
+	do {
+		*trg++ = ((*src   & MASK_0_24_TO_32) << 8 ) | ((*src   & MASK_1_24_TO_32) << 16);
+		*trg++ = ((*src++ & MASK_2_24_TO_32) >> 40) | ((*src   & MASK_3_24_TO_32) << 24) | ((*src & MASK_4_24_TO_32) << 32);
+		*trg++ = ((*src   & MASK_5_24_TO_32) >> 24) | ((*src++ & MASK_6_24_TO_32) >> 16) | ((*src & MASK_7_24_TO_32) << 48);
+		*trg++ = ((*src   & MASK_8_24_TO_32) >> 8 ) |  (*src++ & MASK_9_24_TO_32);
+	} while (byte -= 32);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 inline void display(
@@ -66,7 +108,7 @@ inline void display(
 	return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-int main( void ){
+int main(void) {
 	FixScreen      finfo;
 	VariableScreen vinfo;
 	int fb = open("/dev/fb0", O_RDWR);
