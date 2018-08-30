@@ -81,21 +81,22 @@ static void fast_color_screen(void*              addr,
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 static void fast_blit(void*  src, 
 		       size_t src_bytes, 
-		       size_t single_line_bytes, 
 		       size_t number_of_lines, 
 		       size_t image_width_cutoff, 
 		       void*  screen_pointer)
 {
-	unsigned long long* trg = (unsigned long long*)src;
-	unsigned long long* scr = (unsigned long long*)screen_pointer;
-	size_t ln = number_of_lines;
-	size_t byte = image_width_cutoff << 2;
+	size_t              byte       = image_width_cutoff << 2;
+	unsigned long long* trg        = (unsigned long long*)((char*)src + src_bytes - byte);
+	unsigned long long* scr        = (unsigned long long*)screen_pointer;
+	size_t              ln         = number_of_lines;
+	size_t              bbyte      = byte;
+	unsigned int        SCREEN_PAD = ((SCREEN_WD - image_width_cutoff)<<2)>>3;
+	unsigned int        ind        = 0;
 	do {
-		do { 
-			*scr++ = *trg++;
-	 	} while (byte -= 8);
-		byte = image_width_cutoff << 2;
-		scr += (1280>>3);    // why 1280?
+		do { *scr++ = *trg++; } while (bbyte -= 8);
+		bbyte = byte;
+		scr += SCREEN_PAD;
+		trg = (unsigned long long*)((char*)src + src_bytes - (ind++ * byte));
 	} while(ln--);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
