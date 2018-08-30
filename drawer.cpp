@@ -71,8 +71,8 @@ static void fast_convert_24bit_to_32bit(const void*  _24bits,
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 static void fast_color_screen(void*              addr,
-			      unsigned long long color,
-	                      const size_t       bytes)
+			       unsigned long long color,
+	                       const size_t       bytes)
 {
 	unsigned long long* trg = (unsigned long long*)addr;
 	size_t byte = bytes;
@@ -80,11 +80,11 @@ static void fast_color_screen(void*              addr,
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 static void fast_blit(void*  src, 
-		      size_t src_bytes, 
-		      size_t single_line_bytes, 
-		      size_t number_of_lines, 
-		      size_t image_width_cutoff, 
-		      void*  screen_pointer)
+		       size_t src_bytes, 
+		       size_t single_line_bytes, 
+		       size_t number_of_lines, 
+		       size_t image_width_cutoff, 
+		       void*  screen_pointer)
 {
 	unsigned long long* trg = (unsigned long long*)src;
 	unsigned long long* scr = (unsigned long long*)screen_pointer;
@@ -100,9 +100,9 @@ static void fast_blit(void*  src,
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 static void display(const char*      address, 
-		    FixScreen*       pfinfo, 
-		    VariableScreen*  pvinfo, 
-		    unsigned char*   screen_start)
+		     FixScreen*       pfinfo, 
+		     VariableScreen*  pvinfo, 
+		     unsigned char*   screen_start)
 {
 	BMP* bmp                       = nullptr;
 	FILE* f                        = fopen(address, "rb");
