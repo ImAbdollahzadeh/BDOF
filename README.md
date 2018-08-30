@@ -9,3 +9,10 @@ This little package has been tested for various bitmap files, but feel free to t
 "segmentation fault" or overflow of frame buffer, better to shrink the size of original file and again try to get it displayed on monitor.
 
 Any bug or error can be reported directly to me via GitHub or sending e-mail to my yahoomail: iman_ab2013@yahoo.com
+
+
+
+Edit:
+with the fast blitting, fast converting, and fast displaying, it would be possible to map frames of a movie in a reasonable frquency without having flickr in viewing.
+
+The time between execuation of old_display and fast_display functions is ~20x faster. With the fast blitting functionalities, we could blit an image into the entire display in  ~67 Hz.
