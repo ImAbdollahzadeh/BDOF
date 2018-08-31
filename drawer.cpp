@@ -8,36 +8,7 @@
  *  Then open the X terminal, navigate to the same folder as above, and simply run: sudo ./drawer.o
  */
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-#include <linux/fb.h>		// to get access to variable and fix screen structs
-#include <fcntl.h>		// to open a device file
-#include <sys/mman.h>		// get access to mmap
-#include <sys/ioctl.h>		// access to ioctl calls
-#include <iostream>		// standard C++ library
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define MASK_0_24_TO_32 0x0000000000FFFFFF
-#define MASK_1_24_TO_32 0x0000FFFFFF000000
-#define MASK_2_24_TO_32 0xFFFF000000000000
-#define MASK_3_24_TO_32 0x00000000000000FF
-#define MASK_4_24_TO_32 0x00000000FFFFFF00
-#define MASK_5_24_TO_32 0x00FFFFFF00000000
-#define MASK_6_24_TO_32 0xFF00000000000000
-#define MASK_7_24_TO_32 0x000000000000FFFF
-#define MASK_8_24_TO_32 0x000000FFFFFF0000
-#define MASK_9_24_TO_32 0xFFFFFF0000000000
-
-#define ALIGN_64(X)     ((X) + 63) & ~63
-#define ALIGN_32(X)     ((X) + 31) & ~31
-#define ALIGN_16(X)     ((X) + 15) & ~15
-#define ALIGN_8(X)      ((X) + 7 ) & ~7
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-typedef struct fb_var_screeninfo VariableScreen;
-typedef struct fb_fix_screeninfo FixScreen;
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-typedef struct __BMP {
-	int            width;
-	int            height;
-	unsigned char* pixels;
-} BMP;
+#include "Blitter.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 inline unsigned int pixel_color(unsigned char   r, 
 				 unsigned char   g, 
