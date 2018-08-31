@@ -6,8 +6,8 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/ioctl.h>	
-#include <iostream>	
-#include <chrono>	
+#include <stdio.h>
+#include <stdlib.h>
 //////////////////////////////////////////////////////////////////////
 #define MASK_0_24_TO_32 0x0000000000FFFFFF
 #define MASK_1_24_TO_32 0x0000FFFFFF000000
