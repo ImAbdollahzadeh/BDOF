@@ -28,8 +28,9 @@ static void load_movie(const char* address, PMOVIE mov) {
 }
 
 static void release_movie(PMOVIE mov) {
+	unsigned int i;
 	unsigned int index = mov->frame_number;
-	for(int i = 0; i < index; i++) {
+	for(i = 0; i < index; i++) {
 		free(_32bit_data[i]);
 		free(_24bit_data[i]);
 	}
