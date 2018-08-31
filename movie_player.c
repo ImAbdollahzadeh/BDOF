@@ -7,9 +7,9 @@ static void display_movie(PMOVIE mov) {
 	unsigned int index = mov->frame_number;
 	
 	do {
-		fast_24_to_32_convert(mov->_24bit_data[mov->frame_number - index], 
-		                      mov->_32bit_data[mov->frame_number - index], 
-		                      mov->each_frame_32_byte_number[mov->frame_number - index]);
+		fast_convert_24bit_to_32bit(mov->_24bit_data[mov->frame_number - index], 
+		                            mov->_32bit_data[mov->frame_number - index], 
+		                            mov->each_frame_32_byte_number[mov->frame_number - index]);
 	} while(index--);
 	do {
 		fast_blit(mov->_32bit_data[mov->frame_number - index], 
