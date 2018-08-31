@@ -133,28 +133,3 @@ static void old_display(const char*     address,
 	return;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-int main(void) {
-	FixScreen      finfo;
-	VariableScreen vinfo;
-	int fb = open("/dev/fb0", O_RDWR);
-	if(fb < 0) {
-		printf("ERROR!\n");
-		return -1;	
-	}
-	ioctl(fb, FBIOGET_VSCREENINFO, &vinfo);
-	vinfo.grayscale      = 0;
-	vinfo.bits_per_pixel = 32;
-	ioctl(fb, FBIOPUT_VSCREENINFO, &vinfo);
-	ioctl(fb, FBIOGET_VSCREENINFO, &vinfo);
-	ioctl(fb, FBIOGET_FSCREENINFO, &finfo);
-	long screensize = vinfo.yres_virtual * finfo.line_length;
-	unsigned char* fbp = (unsigned char*)mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fb, (off_t)0);
-
-	fast_color_screen(fbp, 0x00afcb0000afcb00, screensize);
-
-	//for(int j = 0; j < 500; j++)
-		display("SampleImage.bmp", fbp);
-
-	return 0;
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////////
