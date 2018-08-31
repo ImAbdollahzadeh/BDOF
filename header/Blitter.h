@@ -25,6 +25,9 @@
 #define ALIGN_16(X)     ((X) + 15) & ~15
 #define ALIGN_8(X)      ((X) + 7 ) & ~7
 //////////////////////////////////////////////////////////////////////
+#define CHECK_DOUBLE_NUMBERS(_0, _1)     ((_0) == (_1))
+#define CHECK_TRIPLE_NUMBERS(_0, _1, _2) (((_0) == (_1)) == (_2))
+//////////////////////////////////////////////////////////////////////
 typedef struct fb_var_screeninfo VariableScreen;
 typedef struct fb_fix_screeninfo FixScreen;
 //////////////////////////////////////////////////////////////////////
