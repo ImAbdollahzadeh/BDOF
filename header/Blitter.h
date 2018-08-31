@@ -37,17 +37,12 @@ typedef struct _BMP {
 typedef struct _MOVIE {
 	unsigned int       bmp_width;
 	unsigned int       bmp_height;
-	const char*        header;
-	const char*        header_code;
-	const char*        frames;
+	unsigned char      header[2];
 	unsigned int       frame_number;
-	const char*        total_bytes;
-	unsigned long long total_byte_number;
-	unsigned int*      each_frame_24_byte_number;
-	unsigned int*      each_frame_32_byte_number;
+	unsigned long long each_frame_24_byte_number;
+	unsigned long long each_frame_32_byte_number;
 	unsigned char**    _24bit_data;
 	unsigned char**    _32bit_data;
-	const char*        end_of_file;
 } MOVIE, *PMOVIE;
 //////////////////////////////////////////////////////////////////////
 static void fast_convert_24bit_to_32bit(const void*  _24bits,
