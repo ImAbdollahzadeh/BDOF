@@ -1,16 +1,16 @@
 #include "Blitter.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 static unsigned int pixel_color(unsigned char   r, 
-				                        unsigned char   g, 
-				                        unsigned char   b, 
-				                        VariableScreen* vinfo)
+				unsigned char   g, 
+				unsigned char   b, 
+				VariableScreen* vinfo)
 {
   return (r << vinfo->red.offset) | (g << vinfo->green.offset) | (b << vinfo->blue.offset);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 static void fast_convert_24bit_to_32bit(const void*  _24bits,
-	                                      void*        _32bits,
-	                                      const size_t _32bits_bytes)
+	                                void*        _32bits,
+	                                const size_t _32bits_bytes)
 {
 	unsigned long long* src = (unsigned long long*)_24bits;
 	unsigned long long* trg = (unsigned long long*)_32bits;
@@ -32,8 +32,8 @@ static void fast_convert_24bit_to_32bit(const void*  _24bits,
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 static void fast_color_screen(void*              addr,
-			                        unsigned long long color,
-	                            const size_t       bytes)
+			      unsigned long long color,
+	                      const size_t       bytes)
 {
 	unsigned long long* trg = (unsigned long long*)addr;
 	size_t byte = bytes;
@@ -41,10 +41,10 @@ static void fast_color_screen(void*              addr,
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 static void fast_blit(void*  src, 
-		                  size_t src_bytes, 
-		                  size_t number_of_lines, 
-		                  size_t image_width_cutoff, 
-		                  void*  screen_pointer)
+		      size_t src_bytes, 
+		      size_t number_of_lines, 
+		      size_t image_width_cutoff, 
+		      void*  screen_pointer)
 {
 	size_t              byte       = image_width_cutoff << 2;
 	unsigned long long* trg        = (unsigned long long*)((char*)src + src_bytes - byte);
@@ -62,7 +62,7 @@ static void fast_blit(void*  src,
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 static void display(const char*      address, 
-		                unsigned char*   screen_start)
+		    unsigned char*   screen_start)
 {
 	BMP* bmp                       = nullptr;
 	FILE* f                        = fopen(address, "rb");
@@ -99,9 +99,9 @@ static void display(const char*      address,
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 static void old_display(const char*     address, 
-		                    FixScreen*      pfinfo, 
-		                    VariableScreen* pvinfo, 
-		                    unsigned char*  screen_start)
+		        FixScreen*      pfinfo, 
+		        VariableScreen* pvinfo, 
+		        unsigned char*  screen_start)
 {
 	BMP* bmp               = nullptr;
 	FILE* f                = fopen(address, "rb");
