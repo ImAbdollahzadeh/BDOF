@@ -65,8 +65,6 @@ static void fast_blit(void*  src,
 		      void*  screen_pointer);
 //////////////////////////////////////////////////////////////////////
 static void display(const char*      address, 
-		    FixScreen*       pfinfo, 
-		    VariableScreen*  pvinfo, 
 		    unsigned char*   screen_start);
 //////////////////////////////////////////////////////////////////////
 static void display_movie(PMOVIE mov);
