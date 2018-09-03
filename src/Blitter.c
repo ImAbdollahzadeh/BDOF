@@ -2,9 +2,9 @@
 #include "Blitter.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 static unsigned int pixel_color(unsigned char   r, 
-				unsigned char   g, 
-				unsigned char   b, 
-				VariableScreen* vinfo)
+                                unsigned char   g, 
+                                unsigned char   b, 
+                                VariableScreen* vinfo)
 {
   return (r << vinfo->red.offset) | (g << vinfo->green.offset) | (b << vinfo->blue.offset);
 }
