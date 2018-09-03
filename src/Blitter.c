@@ -10,8 +10,8 @@ static unsigned int pixel_color(unsigned char   r,
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 static void fast_convert_24bit_to_32bit(const void*  _24bits,
-	                                void*        _32bits,
-	                                const size_t _32bits_bytes)
+                                        void*        _32bits,
+                                        const size_t _32bits_bytes)
 {
 	unsigned long long* src = (unsigned long long*)_24bits;
 	unsigned long long* trg = (unsigned long long*)_32bits;
