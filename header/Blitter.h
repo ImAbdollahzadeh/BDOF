@@ -38,9 +38,9 @@ typedef struct _BMP {
 } BMP;
 //////////////////////////////////////////////////////////////////////
 typedef struct _MOVIE {
+	unsigned char      header[32];
 	unsigned int       bmp_width;
 	unsigned int       bmp_height;
-	unsigned char      header[2];
 	unsigned int       frame_number;
 	unsigned long long each_frame_24_byte_number;
 	unsigned long long each_frame_32_byte_number;
@@ -49,25 +49,31 @@ typedef struct _MOVIE {
 } MOVIE, *PMOVIE;
 //////////////////////////////////////////////////////////////////////
 static void fast_convert_24bit_to_32bit(const void*  _24bits,
-	                                void*        _32bits,
-	                                const size_t _32bits_bytes);
+                                        void*        _32bits,
+                                        const size_t _32bits_bytes);
 //////////////////////////////////////////////////////////////////////
 static void fast_color_screen(void*              addr,
-			      unsigned long long color,
-	                      const size_t       bytes);
+                              unsigned long long color,
+                              const size_t       bytes);
 //////////////////////////////////////////////////////////////////////
 static void fast_blit(void*  src, 
-		      size_t src_bytes, 
-		      size_t number_of_lines, 
-		      size_t image_width_cutoff, 
-		      void*  screen_pointer);
+                      size_t src_bytes, 
+                      size_t number_of_lines, 
+                      size_t image_width_cutoff, 
+                      void*  screen_pointer);
 //////////////////////////////////////////////////////////////////////
 static void display(const char*      address, 
 		    unsigned char*   screen_start);
 //////////////////////////////////////////////////////////////////////
-static void display_movie(PMOVIE mov);
+sstatic void write_movie_to_file(const char*   source_file,
+                                 const char*    target_file,
+                                 unsigned char  first_frame);
 //////////////////////////////////////////////////////////////////////
-static void load_movie(const char* address, PMOVIE mov);
+static PMOVIE display_movie(PMOVIE mov, 
+			    void*  screen_start); 
+//////////////////////////////////////////////////////////////////////
+static PMOVIE load_movie(const char* address, 
+			 PMOVIE      mov);
 //////////////////////////////////////////////////////////////////////
 static void release_movie(PMOVIE mov);
 //////////////////////////////////////////////////////////////////////
