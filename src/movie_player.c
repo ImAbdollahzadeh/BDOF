@@ -2,8 +2,8 @@
 #include "Blitter.h"
 
 static void write_movie_to_file(const char*   source_file,
-	                        const char*   target_file,
-	                        unsigned char first_frame)
+                                const char*   target_file,
+                                unsigned char first_frame)
 {
 	FILE* f = fopen(source_file, "rb");
 	unsigned int width, height, frame_number;
