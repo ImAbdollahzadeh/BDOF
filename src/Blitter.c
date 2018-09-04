@@ -133,14 +133,14 @@ static void display(const char*      address,
 	fclose(f);
 
 	fast_convert_24bit_to_32bit(bmp->_24bits_pixels, 
-				                      bmp->_32bits_pixels, 
-				                      size32);
+                                    bmp->_32bits_pixels, 
+                                    size32);
 
 	fast_blit(bmp->_32bits_pixels, 
-		        size32, 
-		        bmp->height, 
-		        bmp->width, 
-		        screen_start);
+                  size32, 
+                  bmp->height, 
+                  bmp->width, 
+                  screen_start);
 
 	free(bmp->_32bits_pixels);
 	free(bmp->_24bits_pixels);
