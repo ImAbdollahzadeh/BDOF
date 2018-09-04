@@ -32,6 +32,29 @@ static void fast_convert_24bit_to_32bit(const void*  _24bits,
 	} while (byte -= 32);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+static void SIMD_fast_convert_24bit_to_32bit(const void*  _24bits,
+                                             void*        _32bits,
+                                             const size_t _32bits_bytes)
+{
+	unsigned long long* src = (unsigned long long*)_24bits;
+	unsigned long long* trg = (unsigned long long*)_32bits;
+	size_t byte = _32bits_bytes;
+	do {
+		*trg++ = ((*src   & MASK_0_24_TO_32) << 8 ) | ((*src   & MASK_1_24_TO_32) << 16);
+		*trg++ = ((*src++ & MASK_2_24_TO_32) >> 40) | ((*src   & MASK_3_24_TO_32) << 24) | ((*src & MASK_4_24_TO_32) << 32);
+		*trg++ = ((*src   & MASK_5_24_TO_32) >> 24) | ((*src++ & MASK_6_24_TO_32) >> 16) | ((*src & MASK_7_24_TO_32) << 48);
+		*trg++ = ((*src   & MASK_8_24_TO_32) >> 8 ) | (*src++  & MASK_9_24_TO_32);
+	} while (byte -= 32);
+	__m256* ssrc  = (__m256*)_32bits;
+	byte          = _32bits_bytes;
+	do {
+		*ssrc++ = _mm256_slli_epi32(*ssrc, 8);
+		*ssrc++ = _mm256_slli_epi32(*ssrc, 8);
+		*ssrc++ = _mm256_slli_epi32(*ssrc, 8);
+		*ssrc++ = _mm256_slli_epi32(*ssrc, 8);
+	} while (byte -= 256);
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 static void fast_color_screen(void*              addr,
 			      unsigned long long color,
 	                      const size_t       bytes)
