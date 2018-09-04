@@ -62,6 +62,32 @@ static void fast_blit(void*  src,
 	} while(ln--);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+static void SIMD_fast_blit(void*  src, 
+                           size_t src_bytes, 
+                           size_t number_of_lines, 
+                           size_t image_width_cutoff, 
+                           void*  screen_pointer)
+{
+	size_t              byte       = image_width_cutoff << 2;
+	__m256* trg                    = (__m256*)((char*)src + src_bytes - byte);
+	__m256* scr                    = (__m256*)screen_pointer;
+	size_t              ln         = number_of_lines;
+	size_t              bbyte      = byte;
+	unsigned int        SCREEN_PAD = (SCREEN_WD - image_width_cutoff)>>1;
+	unsigned int        ind        = 0;
+	do {
+		do { 
+			*scr++ = *trg++; 
+			*scr++ = *trg++; 
+			*scr++ = *trg++; 
+			*scr++ = *trg++; 
+		} while (bbyte -= 256);
+		bbyte = byte;
+		scr += SCREEN_PAD;
+		trg = (unsigned long long*)((char*)src + src_bytes - (ind++ * byte));
+	} while(ln--);
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 static void display(const char*      address, 
 		    unsigned char*   screen_start)
 {
